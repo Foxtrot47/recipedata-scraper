@@ -10,7 +10,9 @@ class AllRecipesScraper extends BaseScraper {
   newScrape($) {
     this.recipe.name = this.recipe.name.replace(/\s\s+/g, "");
     const { ingredients, instructions, time } = this.recipe;
-    this.recipe.description = $(".recipe-summary.elementFont__dek--within > p").text();
+    this.recipe.description = $(
+      ".recipe-summary.elementFont__dek--within > p"
+    ).text();
     this.recipe.rating = parseFloat($(".recipe-reviews-decimal-avg").text());
     $(".recipe-meta-item").each((i, el) => {
       const title = $(el)
@@ -43,10 +45,7 @@ class AllRecipesScraper extends BaseScraper {
     });
 
     $(".ingredients-item").each((i, el) => {
-      const ingredient = $(el)
-        .text()
-        .replace(/\s\s+/g, " ")
-        .trim();
+      const ingredient = $(el).text().replace(/\s\s+/g, " ").trim();
       ingredients.push(ingredient);
     });
 
@@ -54,24 +53,36 @@ class AllRecipesScraper extends BaseScraper {
       const instruction = $(el).text();
       instructions.push(instruction);
     });
+    this.recipe.nutrition.calories = parseInt(
+      $(".nutrition-top")
+        .text()
+        .match(/\d+?\.?\d+/)[0]
+    );
+    $(".nutrition-row").each((i, el) => {
+      const nutrient = {};
+      nutrient.name = $(el)
+        .find("span.nutrient-name > span.elementFont__details--bold")
+        .text();
+      nutrient.amount = $(el)
+        .find("span.nutrient-name > span.nutrient-value")
+        .text();
+      nutrient.amountDaily = $(el).find("span.daily-value").text();
+      this.recipe.nutrition.nutrients.push(nutrient);
+    });
   }
 
   oldScrape($) {
     this.defaultSetDescription($);
     const { ingredients, instructions, time } = this.recipe;
     $("#polaris-app label").each((i, el) => {
-      const item = $(el)
-        .text()
-        .replace(/\s\s+/g, "");
+      const item = $(el).text().replace(/\s\s+/g, "");
       if (item !== "Add all ingredients to list" && item !== "") {
         ingredients.push(item);
       }
     });
 
     $(".step").each((i, el) => {
-      const step = $(el)
-        .text()
-        .replace(/\s\s+/g, "");
+      const step = $(el).text().replace(/\s\s+/g, "");
       if (step !== "") {
         instructions.push(step);
       }

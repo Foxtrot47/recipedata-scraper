@@ -8,7 +8,7 @@
       "type": "string",
       "minLength": 1
     },
-    "rating" : {
+    "rating": {
       "type": "number"
     },
     "ingredients": {
@@ -38,8 +38,21 @@
         "total": { "type": "string" }
       }
     },
+    "nutrition": {
+      "type": "object",
+      "properties": {
+        "calories": { "type": "number" },
+        "nutrients": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
     "servings": {
-      "type": { "type": "string" }
+      "type": "string"
     },
     "image": { "type": "string" }
   }

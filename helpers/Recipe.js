@@ -5,6 +5,10 @@ class Recipe {
     this.rating = 0.0;
     this.ingredients = [];
     this.instructions = [];
+    this.nutrition = {
+      calories: 0,
+      nutrients: [],
+    };
     this.tags = [];
     this.time = {
       prep: "",
@@ -12,7 +16,7 @@ class Recipe {
       active: "",
       inactive: "",
       ready: "",
-      total: ""
+      total: "",
     };
     this.servings = "";
     this.image = "";
