@@ -59,6 +59,7 @@ class AllRecipesScraper extends BaseScraper {
         .match(/\d+?\.?\d+/)[0]
     );
     $(".nutrition-row").each((i, el) => {
+      if (this.recipe.nutrition.nutrients.length > 7) return;
       const nutrient = {};
       nutrient.name = $(el)
         .find("span.nutrient-name > span.elementFont__details--bold")
