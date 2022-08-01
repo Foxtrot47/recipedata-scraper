@@ -8,9 +8,10 @@ class AllRecipesScraper extends BaseScraper {
   }
 
   newScrape($) {
-    this.defaultSetDescription($);
     this.recipe.name = this.recipe.name.replace(/\s\s+/g, "");
     const { ingredients, instructions, time } = this.recipe;
+    this.recipe.description = $(".recipe-summary.elementFont__dek--within > p").text();
+    this.recipe.rating = parseFloat($(".recipe-reviews-decimal-avg").text());
     $(".recipe-meta-item").each((i, el) => {
       const title = $(el)
         .children(".recipe-meta-item-header")
