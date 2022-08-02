@@ -15,35 +15,26 @@ class FoodNetworkScraper extends BaseScraper {
     this.defaultSetImage($);
     this.defaultSetDescription($);
     const { ingredients, instructions, tags, time } = this.recipe;
-    this.recipe.name = $(".o-AssetTitle__a-HeadlineText")
-      .first()
-      .text();
+    this.recipe.name = $(".o-AssetTitle__a-HeadlineText").first().text();
 
     $(".o-Ingredients__a-Ingredient, .o-Ingredients__a-SubHeadline").each(
       (i, el) => {
         if (!$(el).hasClass("o-Ingredients__a-Ingredient--SelectAll")) {
-          const item = $(el)
-            .text()
-            .replace(/\s\s+/g, "");
+          const item = $(el).text().replace(/\s\s+/g, "");
           ingredients.push(item);
         }
       }
     );
 
     $(".o-Method__m-Step").each((i, el) => {
-      const step = $(el)
-        .text()
-        .replace(/\s\s+/g, "");
+      const step = $(el).text().replace(/\s\s+/g, "");
       if (step != "") {
         instructions.push(step);
       }
     });
 
     $(".o-RecipeInfo li").each((i, el) => {
-      let timeItem = $(el)
-        .text()
-        .replace(/\s\s+/g, "")
-        .split(":");
+      let timeItem = $(el).text().replace(/\s\s+/g, "").split(":");
       switch (timeItem[0]) {
         case "Prep":
           time.prep = timeItem[1];
@@ -59,6 +50,9 @@ class FoodNetworkScraper extends BaseScraper {
           break;
         case "Total":
           time.total = timeItem[1];
+          break;
+        case "Yield":
+          this.recipe.servings = timeItem[1].replace(/\sservings/g, "");
           break;
         default:
       }
