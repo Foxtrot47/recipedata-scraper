@@ -19,6 +19,10 @@ class FoodNetworkScraper extends BaseScraper {
       $("body").attr("data-shorten-url").match(/\d+$/)[0]
     );
     this.recipe.name = $(".o-AssetTitle__a-HeadlineText").first().text();
+    this.recipe.description = $(".o-AssetDescription__a-Description")
+      .text()
+      .replace(/\s\s+/g, "");
+
     $(".o-Ingredients__a-Ingredient, .o-Ingredients__a-SubHeadline").each(
       (i, el) => {
         if (!$(el).hasClass("o-Ingredients__a-Ingredient--SelectAll")) {
