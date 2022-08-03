@@ -4,12 +4,18 @@
   "type": "object",
   "required": ["name", "ingredients", "instructions"],
   "properties": {
+    "id": {
+      "type": "number"
+    },
     "name": {
       "type": "string",
       "minLength": 1
     },
     "rating": {
       "type": "number"
+    },
+    "difficulty": {
+      "type": "string"
     },
     "ingredients": {
       "type": "array",

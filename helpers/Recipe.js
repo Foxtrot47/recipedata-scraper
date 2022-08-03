@@ -1,8 +1,10 @@
 class Recipe {
   constructor() {
+    this.id = 0;
     this.name = "";
     this.description = "";
     this.rating = 0.0;
+    this.difficulty = "";
     this.ingredients = [];
     this.instructions = [];
     this.nutrition = {

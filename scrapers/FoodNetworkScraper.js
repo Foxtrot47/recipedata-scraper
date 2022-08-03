@@ -15,8 +15,10 @@ class FoodNetworkScraper extends BaseScraper {
     this.defaultSetImage($);
     this.defaultSetDescription($);
     const { ingredients, instructions, tags, time } = this.recipe;
+    this.recipe.id = parseInt(
+      $("body").attr("data-shorten-url").match(/\d+$/)[0]
+    );
     this.recipe.name = $(".o-AssetTitle__a-HeadlineText").first().text();
-
     $(".o-Ingredients__a-Ingredient, .o-Ingredients__a-SubHeadline").each(
       (i, el) => {
         if (!$(el).hasClass("o-Ingredients__a-Ingredient--SelectAll")) {
@@ -53,6 +55,9 @@ class FoodNetworkScraper extends BaseScraper {
           break;
         case "Yield":
           this.recipe.servings = timeItem[1].replace(/\sservings/g, "");
+          break;
+        case "Level":
+          this.recipe.difficulty = timeItem[1];
           break;
         default:
       }
